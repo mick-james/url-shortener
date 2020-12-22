@@ -20,15 +20,15 @@ ADD shortener_umbrella/apps/shortener_web/mix.exs /stord/apps/shortener_web/
 RUN cd /stord && mix deps.get
 RUN cd /stord && mix deps.compile
 
-# Same with npm deps
-# ADD shortener_umbrella/apps/shortener_web/assets/package.json apps/shortener_web/assets/
-# RUN cd apps/shortener_web/assets && npm install
+# Cache npm deps
+ADD shortener_umbrella/apps/shortener_web/assets/package.json apps/shortener_web/assets/
+RUN cd apps/shortener_web/assets && npm install
 
 # Run frontend build, compile, and digest assets
-# RUN cd apps/shortener_web/assets/ && \
-#   npm run deploy && \
-#   cd - && \
-#   mix do compile, phx.digest
+RUN cd apps/shortener_web/assets/ && \
+  npm run deploy && \
+  cd - && \
+  mix do compile, phx.digest
 
 # USER default
 
