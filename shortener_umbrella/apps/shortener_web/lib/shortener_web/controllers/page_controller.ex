@@ -5,10 +5,10 @@ defmodule ShortenerWeb.PageController do
     url
     |> Shortener.shorten()
     |> case do
-      {:ok, short_string} ->
+      {:ok, code} ->
         conn
         |> clear_flash()
-        render(conn, "index.html", short: "123")
+        render(conn, "index.html", short: code)
       {:error, reason} ->
         conn
         |> clear_flash()
@@ -18,5 +18,4 @@ defmodule ShortenerWeb.PageController do
   end
 
   def index(conn, _), do: render(conn, "index.html")
-  
 end
