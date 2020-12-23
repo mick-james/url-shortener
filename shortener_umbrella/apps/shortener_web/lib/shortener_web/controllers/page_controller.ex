@@ -1,9 +1,11 @@
 defmodule ShortenerWeb.PageController do
   use ShortenerWeb, :controller
 
+  def url_shortener, do: Application.get_env(:shortener_web, :shortener_api)
+
   def index(conn, %{"url" => url}) do
     url
-    |> Shortener.shorten()
+    |> url_shortener().shorten()
     |> case do
       {:ok, code} ->
         conn
@@ -19,9 +21,9 @@ defmodule ShortenerWeb.PageController do
 
   def index(conn, _), do: render(conn, "index.html")
 
-  def send_to_url(conn, params = %{"code" => [code]}) do
+  def send_to_url(conn, %{"code" => [code]}) do
     code
-    |> Shortener.lengthen()
+    |> url_shortener().lengthen()
     |> case do
       {:ok, url} ->
         conn

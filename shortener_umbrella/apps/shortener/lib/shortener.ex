@@ -2,6 +2,8 @@ defmodule Shortener do
   @moduledoc """
   Shortener is a String Shortener Application
   """
+  @callback shorten(String.t) :: {atom, String.t}
+  @callback lengthen(String.t) :: {atom, String.t}
 
   @doc """
   Shorten and persist a string.

@@ -30,6 +30,8 @@ config :shortener_web, ShortenerWeb.Endpoint,
     ]
   ]
 
+config :shortener_web, shortener_api: Shortener
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

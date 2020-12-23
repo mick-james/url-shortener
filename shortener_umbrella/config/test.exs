@@ -18,5 +18,7 @@ config :shortener_web, ShortenerWeb.Endpoint,
   http: [port: 4002],
   server: false
 
+config :shortener_web, shortener_api: ShortenerMock
+
 # Print only warnings and errors during test
 config :logger, level: :warn
