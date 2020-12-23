@@ -1,4 +1,4 @@
-defmodule Shortener do
+defmodule Shortener.UrlShortener do
   @moduledoc """
   Shortener is a String Shortener Application
   """
@@ -6,7 +6,7 @@ defmodule Shortener do
   @callback lengthen(String.t) :: {atom, String.t}
 
   @doc """
-  Shorten and persist a string.
+  Shorten and persist a url, returning the short code
   """
   def shorten(url) do
     code = encodeUrl(url)
@@ -26,7 +26,7 @@ defmodule Shortener do
 
   defp handle_insert({:ok, %{short_code: code}}), do: {:ok, code}
   defp handle_insert({:error, changeset = %Ecto.Changeset{}}) do
-    if Enum.any?(changeset.errors, &actual_error?/1) do
+    if Enum.all?(changeset.errors, &actual_error?/1) do
       {:error, "There was an error trying to shorten that URL"}
     else
       {:ok, changeset.changes.short_code}
@@ -35,7 +35,7 @@ defmodule Shortener do
   defp handle_insert({:error, _}), do: {:error, "There was a problem talking to the database"}
   
   @doc """
-  Lookup the stored string from the short code
+  Lookup the stored url from the short code
   """
   def lengthen(code) do
     Shortener.Url

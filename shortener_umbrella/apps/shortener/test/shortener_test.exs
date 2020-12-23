@@ -1,7 +1,7 @@
 defmodule Shortener.Test do
   use Shortener.DataCase, async: true
 
-  import Shortener, only: [shorten: 1, lengthen: 1]
+  import Shortener.UrlShortener, only: [shorten: 1, lengthen: 1]
 
   @code "MTI2NDQ4MDI"
   @url "url_value_here"

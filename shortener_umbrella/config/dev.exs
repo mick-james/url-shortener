@@ -30,7 +30,7 @@ config :shortener_web, ShortenerWeb.Endpoint,
     ]
   ]
 
-config :shortener_web, shortener_api: Shortener
+config :shortener_web, shortener_api: Shortener.UrlShortener
 
 # ## SSL Support
 #

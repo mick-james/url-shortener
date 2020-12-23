@@ -13,7 +13,7 @@ config :shortener_web, ShortenerWeb.Endpoint,
   url: [host: "example.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-config :shortener_web, shortener_api: Shortener
+config :shortener_web, shortener_api: Shortener.UrlShortener
 
 # ## SSL Support
 #
