@@ -8,7 +8,7 @@
 
 <%= if assigns[:short] do %>
 <section class="row">
-<p>Your shortened url is: <%= @short %></p>
+<p>Your shortened url is: <%= ShortenerWeb.Endpoint.url()  %>/<%= @short %></p>
 </section>
 <% end %>
 
