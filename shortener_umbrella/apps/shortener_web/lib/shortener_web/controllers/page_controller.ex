@@ -6,13 +6,17 @@ defmodule ShortenerWeb.PageController do
     |> Shortener.shorten()
     |> case do
       {:ok, short_string} ->
-        IO.inspect short_string
+        conn
+        |> clear_flash()
+        render(conn, "index.html", short: "123")
       {:error, reason} ->
-        IO.inspect reason
+        conn
+        |> clear_flash()
+        |> put_flash(:error, reason)
+        |> render("index.html")
     end
-    render(conn, "index.html")
   end
 
-  def index(conn, _params), do: render(conn, "index.html")
+  def index(conn, _), do: render(conn, "index.html")
   
 end
