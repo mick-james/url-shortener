@@ -17,6 +17,7 @@ defmodule ShortenerWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/*code", PageController, :send_to_url
   end
 
   # Other scopes may use custom stacks.

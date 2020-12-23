@@ -1,9 +1,6 @@
 defmodule Shortener do
   @moduledoc """
   Shortener is a String Shortener Application
-
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
   """
 
   @doc """
@@ -38,9 +35,14 @@ defmodule Shortener do
   @doc """
   Lookup the stored string from the short code
   """
-  def lengthen(string_to_lengthen) do
-    # {:ok, string_to_lengthen}
-    {:error, "Error: Not implemented"}
+  def lengthen(code) do
+    Shortener.Url
+    |> Shortener.Repo.get_by(short_code: code)
+    |> case do
+      nil -> {:error, "That short code does not match one of our urls"}
+
+      %Shortener.Url{url: url} -> {:ok, url}
+    end
   end
 
   defp actual_error?({:short_code, {_, [constraint: :unique, constraint_name: _]}}) do
