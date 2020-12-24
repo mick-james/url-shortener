@@ -8,7 +8,7 @@ defmodule ShortenerWeb.PageController do
   def shorten(conn, %{"url" => ""}) do
     conn
     |> put_status(:bad_request)
-    |> json(%{"status" => "error", "message" => "url is missing"})
+    |> json(%{"status" => "error", "message" => "url is invalid"})
   end
 
   def shorten(conn, %{"url" => url}) do
@@ -24,6 +24,12 @@ defmodule ShortenerWeb.PageController do
         |> put_status(:internal_server_error)
         |> json(%{"status" => "error", "message" => reason})
     end
+  end
+
+  def shorten(conn, _) do
+    conn
+    |> put_status(:bad_request)
+    |> json(%{"status" => "error", "message" => "url is missing"})
   end
 
 
