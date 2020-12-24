@@ -13,6 +13,12 @@ defmodule ShortenerWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api", ShortenerWeb do
+    pipe_through :api
+
+    post "/shorten", PageController, :shorten
+  end
+
   scope "/", ShortenerWeb do
     pipe_through :browser
 

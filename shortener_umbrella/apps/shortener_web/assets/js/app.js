@@ -13,3 +13,8 @@ import "../css/app.scss"
 //     import socket from "./socket"
 //
 import "phoenix_html"
+
+import { define } from 'remount'
+import ShortenerForm from "./src/form.js"
+
+define({ 'shortener-form': ShortenerForm })

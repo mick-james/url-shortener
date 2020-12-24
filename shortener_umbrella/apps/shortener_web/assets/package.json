@@ -7,8 +7,13 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.12.10",
+    "formik": "^2.2.6",
     "phoenix": "file:../../../deps/phoenix",
-    "phoenix_html": "file:../../../deps/phoenix_html"
+    "phoenix_html": "file:../../../deps/phoenix_html",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "remount": "^0.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
