@@ -1,7 +1,7 @@
 My submission for the URL shortener
 
 My Timeline:
-It was stated that a qualified candidate would complete this challenge in 2-4 hours.  I believe I took longer than that, however it was also broken up into multiple short sessions, so there is extra overhead there.
+It was stated that a qualified candidate would complete this challenge in 2-4 hours.  I believe I took longer than 4 hours total, maybe closer to 6, however it was also broken up into multiple short sessions, so there was extra spin up / down / checkpointing overhead involved.
 
 Submission:
 This is an Elixir Umbrella app with a very simple react/formik ui page.  While I had originally planned to complete the Dockerfile and docker compose configuration for simpler testing, I cut myself off as a matter of time limit.  So unfortunately this must be run natively.
