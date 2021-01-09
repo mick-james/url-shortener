@@ -16,7 +16,7 @@ defmodule ShortenerWeb.Router do
   scope "/api", ShortenerWeb do
     pipe_through :api
 
-    post "/shorten", PageController, :shorten
+    post "/shorten", ApiController, :shorten
   end
 
   # Enables LiveDashboard only for development
