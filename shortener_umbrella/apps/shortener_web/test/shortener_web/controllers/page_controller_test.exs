@@ -15,7 +15,7 @@ defmodule ShortenerWeb.PageControllerTest do
   end
 
   test "POST /api/shorten succeeds on create record", %{conn: conn} do
-    Shortener.UrlShortenerMock
+    Shortener.StringShortenerMock
     |> expect(:shorten, fn url ->
       assert url == @url
       {:ok, @code}
@@ -46,7 +46,7 @@ defmodule ShortenerWeb.PageControllerTest do
   end
 
   test "POST /api/shorten reports on internal error", %{conn: conn} do
-    Shortener.UrlShortenerMock
+    Shortener.StringShortenerMock
     |> expect(:shorten, fn url ->
       assert url == @url
       {:error, @error}

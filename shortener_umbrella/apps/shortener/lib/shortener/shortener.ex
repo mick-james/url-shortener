@@ -1,4 +1,4 @@
-defmodule Shortener.UrlShortener do
+defmodule Shortener.StringShortener do
   @moduledoc """
   Shortener is a String Shortener Application
   """
@@ -8,17 +8,17 @@ defmodule Shortener.UrlShortener do
   @doc """
   Shorten and persist a url, returning the short code
   """
-  def shorten(url) do
-    code = encodeUrl(url)
+  def shorten(input_string) do
+    code = encodeString(input_string)
   
-    %Shortener.Url{}
-    |> Shortener.Url.changeset(%{short_code: code, url: url})
+    %Shortener.ShortCode{}
+    |> Shortener.ShortCode.changeset(%{short_code: code, value: input_string})
     |> Shortener.Repo.insert()
     |> handle_insert()
   end
 
-  defp encodeUrl(url) do
-    url
+  defp encodeString(input_string) do
+    input_string
     |> :erlang.phash2()
     |> Integer.to_string()
     |> Base.url_encode64(padding: false)
@@ -27,7 +27,7 @@ defmodule Shortener.UrlShortener do
   defp handle_insert({:ok, %{short_code: code}}), do: {:ok, code}
   defp handle_insert({:error, changeset = %Ecto.Changeset{}}) do
     if Enum.all?(changeset.errors, &actual_error?/1) do
-      {:error, "There was an error trying to shorten that URL"}
+      {:error, "There was an error trying to shorten the string " <> changeset.changes.value}
     else
       {:ok, changeset.changes.short_code}
     end
@@ -38,12 +38,12 @@ defmodule Shortener.UrlShortener do
   Lookup the stored url from the short code
   """
   def lengthen(code) do
-    Shortener.Url
+    Shortener.ShortCode
     |> Shortener.Repo.get_by(short_code: code)
     |> case do
       nil -> {:error, "That short code does not match one of our urls"}
 
-      %Shortener.Url{url: url} -> {:ok, url}
+      %Shortener.ShortCode{value: value} -> {:ok, value}
     end
   end
 
