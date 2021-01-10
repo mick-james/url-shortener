@@ -4,7 +4,7 @@ defmodule ShortenerWeb.PageController do
   def url_shortener, do: Application.get_env(:shortener_web, :shortener_api)
 
   def index(conn, _), do: render(conn, "index.html")
-  
+
   def send_to_url(conn, %{"code" => [code]}) do
     code
     |> url_shortener().lengthen()
@@ -13,6 +13,7 @@ defmodule ShortenerWeb.PageController do
         conn
         |> clear_flash()
         |> redirect(external: url)
+
       {:error, reason} ->
         conn
         |> clear_flash()

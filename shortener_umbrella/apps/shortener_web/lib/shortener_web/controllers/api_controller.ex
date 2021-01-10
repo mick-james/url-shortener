@@ -10,14 +10,20 @@ defmodule ShortenerWeb.ApiController do
   end
 
   def shorten(conn, %{"url" => url}) do
-    url
-    |> url_shortener().shorten()
-    |> case do
-      {:ok, code} ->
+    with {:valid, true} <- {:valid, Validator.validURL?(url)},
+         {:ok, code} <- url_shortener().shorten(url) do
+      conn
+      |> put_status(:created)
+      |> json(%{"status" => "ok", "url" => url, "code" => code})
+    else
+      {:valid, false} ->
+        # url failed validation
         conn
-        |> put_status(:created)
-        |> json(%{"status" => "ok", "url" => url, "code" => code})
+        |> put_status(:bad_request)
+        |> json(%{"status" => "error", "message" => "Invalid url format"})
+
       {:error, reason} ->
+        # shortener failed or rejected the command
         conn
         |> put_status(:internal_server_error)
         |> json(%{"status" => "error", "message" => reason})

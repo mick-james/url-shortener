@@ -14,48 +14,26 @@ defmodule ShortenerWeb.PageControllerTest do
     assert html_response(conn, 200) =~ "Shortener · Phoenix Framework"
   end
 
-  test "POST /api/shorten succeeds on create record", %{conn: conn} do
+  test "GET /<code> with a valid code forwards to a url", %{conn: conn} do
     Shortener.StringShortenerMock
-    |> expect(:shorten, fn url ->
-      assert url == @url
-      {:ok, @code}
+    |> expect(:lengthen, fn code ->
+      assert code == @code
+      {:ok, @url}
     end)
 
-    conn = post(conn, "/api/shorten", url: @url)
-    assert json_response(conn, 201) == %{
-      "code" => @code,
-      "status" => "ok",
-      "url" => @url
-    }
+    conn = get(conn, "/" <> @code)
+    assert redirected_to(conn, 302) =~ @url
   end
 
-  test "POST /api/shorten rejects an empty url", %{conn: conn} do
-    conn = post(conn, "/api/shorten", url: "")
-    assert json_response(conn, 400) == %{
-      "status" => "error",
-      "message" => "url is invalid"
-    }
-  end
-
-  test "POST /api/shorten rejects a missing url", %{conn: conn} do
-    conn = post(conn, "/api/shorten")
-    assert json_response(conn, 400) == %{
-      "status" => "error",
-      "message" => "url is missing"
-    }
-  end
-
-  test "POST /api/shorten reports on internal error", %{conn: conn} do
+  test "GET /<code> with an invalid code renders the home page", %{conn: conn} do
     Shortener.StringShortenerMock
-    |> expect(:shorten, fn url ->
-      assert url == @url
+    |> expect(:lengthen, fn code ->
+      assert code == @code
       {:error, @error}
     end)
 
-    conn = post(conn, "/api/shorten", url: @url)
-    assert json_response(conn, 500) == %{
-      "status" => "error",
-      "message" => @error
-    }
+    conn = get(conn, "/" <> @code)
+    assert get_flash(conn, :error) == @error
+    assert redirected_to(conn, 302) =~ "/"
   end
 end

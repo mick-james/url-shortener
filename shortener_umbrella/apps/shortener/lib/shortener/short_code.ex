@@ -19,5 +19,3 @@ defmodule Shortener.ShortCode do
     |> unique_constraint(:short_code)
   end
 end
-
-

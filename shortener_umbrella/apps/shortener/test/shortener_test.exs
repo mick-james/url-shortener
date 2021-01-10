@@ -38,7 +38,6 @@ defmodule Shortener.Test do
     new_record = Shortener.Repo.get_by(Shortener.ShortCode, short_code: @code)
     assert new_record.short_code == @code
     assert new_record.value == @value
-
   end
 
   # Tests etc...
