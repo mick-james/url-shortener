@@ -44,6 +44,16 @@ defmodule ShortenerWeb.ApiControllerTest do
            }
   end
 
+
+  test "POST /api/shorten rejects an invalid url", %{conn: conn} do
+    conn = post(conn, "/api/shorten", url: @invalid_url)
+
+    assert json_response(conn, 400) == %{
+             "status" => "error",
+             "message" => "Invalid url format"
+           }
+  end
+
   test "POST /api/shorten reports on internal error", %{conn: conn} do
     Shortener.StringShortenerMock
     |> expect(:shorten, fn url ->

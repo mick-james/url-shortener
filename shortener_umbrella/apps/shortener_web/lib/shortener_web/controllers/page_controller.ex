@@ -21,4 +21,11 @@ defmodule ShortenerWeb.PageController do
         |> redirect(to: "/")
     end
   end
+
+  def send_to_url(conn, _) do
+    conn
+    |> clear_flash()
+    |> put_flash(:error, "Invalid code provided")
+    |> redirect(to: "/")
+  end
 end

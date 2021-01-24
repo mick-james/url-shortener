@@ -15,6 +15,6 @@ import "../css/app.scss"
 import "phoenix_html"
 
 import { define } from 'remount'
-import ShortenerForm from "./src/form.js"
+import ShortenedUrls from "./src/shortened_urls.js"
 
-define({ 'shortener-form': ShortenerForm })
+define({ 'shortener-app': ShortenedUrls })

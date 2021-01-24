@@ -36,4 +36,15 @@ defmodule ShortenerWeb.PageControllerTest do
     assert get_flash(conn, :error) == @error
     assert redirected_to(conn, 302) =~ "/"
   end
+
+  test "GET /<code> with extra params handles the redirect", %{conn: conn} do
+    Shortener.StringShortenerMock
+    |> expect(:lengthen, fn code ->
+      assert code == @code
+      {:ok, @url}
+    end)
+
+    conn = get(conn, "/" <> @code <> "?Extradata=43235")
+    assert redirected_to(conn, 302) =~ @url
+  end
 end
